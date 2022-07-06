@@ -48,23 +48,20 @@ const updateTask = (req, res) => {
 };
 
 const deleteTask = (req, res) => {
-  taskModel.findByIdAndDelete(
-    {
-      _id: req.body.id,
-    },
-    (err, data) => {
-      if (err) {
-        res.status(401).json({
-          message: "Error to delete!",
-        });
-      } else {
-        res.status(200).json({
-          message: "Successfully deleted!",
-          data: data,
-        });
-      }
+  console.log(req.body);
+  const body = req.body;
+  taskModel.findOneAndDelete({ body }, (err, data) => {
+    if (err) {
+      res.status(401).json({
+        message: "Error to delete!",
+      });
+    } else {
+      res.status(200).json({
+        message: "Successfully deleted!",
+        data: data,
+      });
     }
-  );
+  });
 };
 
 module.exports = { getTask, createTask, deleteTask, updateTask };
